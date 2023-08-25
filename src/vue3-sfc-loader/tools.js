@@ -199,17 +199,12 @@ export async function transformJSCode(source, moduleSourceType, filename, additi
 
 	let ast;
 	try {
-
 		ast = babel_parse(source, {
 			// doc: https://babeljs.io/docs/en/babel-parser#options
 			allowReturnOutsideFunction: true,
 			sourceType: moduleSourceType ? 'module' : 'script',
 			sourceFilename: filename.toString(),
-			plugins: [
-				//				'optionalChaining',
-				//				'nullishCoalescingOperator',
-				...additionalBabelParserPlugins !== undefined ? additionalBabelParserPlugins : [],
-			],
+			
 		});
 	} catch (ex) {
 
