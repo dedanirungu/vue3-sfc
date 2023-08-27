@@ -81,8 +81,12 @@ const app = Vue.createApp({
             `;
 
             const style = `
-            .card-subtitle{background:red;}
+            .card-subtitle{color:red;}
             `;
+            // Add the styles to the document's head
+            const styleTag = document.createElement('style');
+            styleTag.innerText = style;
+            document.head.appendChild(styleTag);
 
             // Create a function from the script string and execute it
             const scriptFunction = new Function(script);
@@ -92,7 +96,12 @@ const app = Vue.createApp({
             return {
                 template,
                 ...componentOptions, // Spread the component options
-                style,
+                setup() {
+                    // Apply the styles using the styles property
+                    return {
+                        style
+                    };
+                },
             };
         })
     },
