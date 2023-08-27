@@ -169,13 +169,11 @@ export async function createSFCModule(source, filename, options) {
 
 			return [[], template.source];
 
-			//return await transformJSCode(template.code, true, descriptor.filename, additionalBabelParserPlugins, additionalBabelPlugins, log);
 		});
 
 
 		await loadDeps(filename, templateDepsList, options);
 
-		//Object.assign(component, createCJSModule(filename, templateTransformedSource, options).exports);
 
 		component['template'] = templateTransformedSource;
 

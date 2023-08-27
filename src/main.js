@@ -36,9 +36,67 @@ const fetchComponent = (comp_path) => {
 
 const app = Vue.createApp({
     components: {
-        'my-component': Vue.defineAsyncComponent(() => loadModule('https://utupress.github.io/blocks/alert/index.vue', options))
+        //'my-component': Vue.defineAsyncComponent(() => loadModule('https://utupress.github.io/blocks/alert/index.vue', options)),
+        'async-component': Vue.defineAsyncComponent(async () => {
+            const template = `
+            <div class="row m-2">
+
+            <div class="col-8">
+                <h2>
+                    Welcome Back {{ name }}! 🥳
+                </h2>
+                <small class="card-subtitle text-no-wrap ps-2">
+                    Keep improving the sales.
+                </small>
+                <div class="card-text d-flex align-center mt-2 pb-2 ps-2">
+                    <div>
+                        <button class="btn btn-primary" href="#" @click="loadModule('testing')">
+                            View Invoices
+                        </button>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-4 greeting-card-trophy-wrapper">
+                <img height="108px" style="max-width:83px;" class="greeting-card-trophy"
+                    :src=" 'images/misc/trophy.png'" />
+            </div>
+    
+        </div>
+            `;
+            const script = `
+            return {
+                data(){
+                    return {
+                        name:'Dedan'
+                    }
+                },
+                methods: {
+                    loadModule(path) {
+                        alert(path);
+                    },
+                },
+            
+            };
+            `;
+
+            const style = `
+            .card-subtitle{background:red;}
+            `;
+
+            // Create a function from the script string and execute it
+            const scriptFunction = new Function(script);
+            const componentOptions = scriptFunction();
+
+
+            return {
+                template,
+                ...componentOptions, // Spread the component options
+                style,
+            };
+        })
     },
-    template: '<div>fsdfsdfsd <my-component></my-component></div>'
+    template: '<div>fsdfsdfsd <my-component></my-component> dddddd <async-component></async-component></div>'
 });
 
 app.mount('#app');
